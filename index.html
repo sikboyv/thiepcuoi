@@ -988,35 +988,49 @@ AOS.init({
 </script>
 <script>
 
-const wedding = new Date(2026, 6, 9, 19, 45, 0).getTime();
+const wedding = new Date("2026-07-29T11:00:00+07:00").getTime();
 
-function updateCountdown(){
+const daysElement = document.getElementById("days");
+const hoursElement = document.getElementById("hours");
+const minutesElement = document.getElementById("minutes");
+const secondsElement = document.getElementById("seconds");
 
-    const now = new Date().getTime();
-
+function updateCountdown() {
+    const now = Date.now();
     const distance = wedding - now;
 
-    if(distance < 0){
+    if (distance <= 0) {
+        daysElement.textContent = "0";
+        hoursElement.textContent = "0";
+        minutesElement.textContent = "0";
+        secondsElement.textContent = "0";
         return;
     }
 
-    document.getElementById("days").textContent =
-        Math.floor(distance/(1000*60*60*24));
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
 
-    document.getElementById("hours").textContent =
-        Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+    const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) /
+        (1000 * 60 * 60)
+    );
 
-    document.getElementById("minutes").textContent =
-        Math.floor((distance%(1000*60*60))/(1000*60));
+    const minutes = Math.floor(
+        (distance % (1000 * 60 * 60)) /
+        (1000 * 60)
+    );
 
-    document.getElementById("seconds").textContent =
-        Math.floor((distance%(1000*60))/1000);
+    const seconds = Math.floor(
+        (distance % (1000 * 60)) / 1000
+    );
 
+    daysElement.textContent = days;
+    hoursElement.textContent = hours;
+    minutesElement.textContent = minutes;
+    secondsElement.textContent = seconds;
 }
 
 updateCountdown();
-
-setInterval(updateCountdown,1000);
+setInterval(updateCountdown, 1000);
     
     </script>
     <script>
